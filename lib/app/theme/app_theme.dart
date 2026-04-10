@@ -1,15 +1,6 @@
 import 'package:flutter/material.dart';
 
 ThemeData 
-
-
-
-
-
-
-
-
-
 buildAppTheme() {
   const navy = Color(0xFF112037);
   const accentRed = Color(0xFFBB1943);

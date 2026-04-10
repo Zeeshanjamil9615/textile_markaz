@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textile_markaz/app/theme/app_theme.dart';
+import 'package:textile_markaz/screens/auth/login/login.dart';
+import 'package:textile_markaz/screens/auth/signup/signup.dart';
 import 'package:textile_markaz/screens/category_grid_screen.dart';
 import 'package:textile_markaz/screens/home_search_screen.dart';
 import 'package:textile_markaz/screens/mode_choice_screen.dart';
@@ -14,23 +16,24 @@ void main() {
   runApp(const TextileMarkazApp());
 }
 
-
 class TextileMarkazApp extends StatelessWidget {
   const TextileMarkazApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Textile Markaz',
       debugShowCheckedModeBanner: false,
       theme: buildAppTheme(),
-      initialRoute: HomeSearchScreen.routeName,
+      initialRoute: LoginScreen.routeName,
       routes: {
         HomeSearchScreen.routeName: (_) => const HomeSearchScreen(),
         ResultsScreen.routeName: (_) => const ResultsScreen(),
         ModeChoiceScreen.routeName: (_) => const ModeChoiceScreen(),
         CategoryGridScreen.routeName: (_) => const CategoryGridScreen(),
         PostAdScreen.routeName: (_) => const PostAdScreen(),
+        LoginScreen.routeName: (_) => const LoginScreen(),
+        SignupScreen.routeName: (_) => const SignupScreen(),
       },
     );
   }
