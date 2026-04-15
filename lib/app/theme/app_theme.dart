@@ -1,31 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:textile_markaz/app/theme/app_colors.dart';
 
-ThemeData 
-buildAppTheme() {
-  const navy = Color(0xFF112037);
-  const accentRed = Color(0xFFBB1943);
-  const webSurface = Color(0xFFF3F3F3);
-  const mutedText = Color(0xFF777777);
-
+ThemeData buildAppTheme() {
   final scheme = ColorScheme.light(
-    primary: navy,
+    primary: AppColors.primaryclr,
     onPrimary: Colors.white,
-    secondary: navy,
+    secondary: AppColors.primaryclr,
     onSecondary: Colors.white,
-    tertiary: accentRed,
+    tertiary: AppColors.accentRed,
     onTertiary: Colors.white,
-    surface: webSurface,
-    onSurface: navy,
-    onSurfaceVariant: mutedText,
-    outline: const Color(0xFFDDDDDD),
+    surface: AppColors.webSurface,
+    onSurface: AppColors.primaryclr,
+    onSurfaceVariant: AppColors.mutedText,
+    outline: AppColors.outline,
   );
 
   return ThemeData(
     useMaterial3: true,
     colorScheme: scheme,
-    scaffoldBackgroundColor: webSurface,
+    scaffoldBackgroundColor: AppColors.webSurface,
     appBarTheme: const AppBarTheme(
-      backgroundColor: navy,
+      backgroundColor: AppColors.primaryclr,
       foregroundColor: Colors.white,
       centerTitle: true,
       elevation: 0,
@@ -40,7 +35,7 @@ buildAppTheme() {
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: Colors.white,
-      hintStyle: const TextStyle(color: mutedText),
+      hintStyle: const TextStyle(color: AppColors.mutedText),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide(color: scheme.outline),
@@ -51,8 +46,9 @@ buildAppTheme() {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: accentRed, width: 2),
+        borderSide: const BorderSide(color: AppColors.accentRed, width: 2),
       ),
     ),
   );
 }
+

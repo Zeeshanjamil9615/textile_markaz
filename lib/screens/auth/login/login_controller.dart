@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:textile_markaz/api_service/api_service.dart';
 import 'package:textile_markaz/screens/auth/signup/signup.dart';
 import 'package:textile_markaz/screens/home_search_screen.dart';
 
@@ -32,13 +33,39 @@ class LoginController extends GetxController {
 
     isLoading.value = true;
     try {
-      await Future<void>.delayed(const Duration(milliseconds: 700));
-      Get.snackbar(
-        'Success',
-        'Logged in (demo)',
-        snackPosition: SnackPosition.BOTTOM,
+      final map = await ApiService.instance.loginRequest(
+        email: emailC.text.trim(),
+        password: passwordC.text.trim(),
       );
-      Get.offAllNamed(HomeSearchScreen.routeName);
+      final res = LoginResponse.fromJson(map);
+
+      if (res.status == 200) {
+        Get.snackbar(
+          'Success',
+          res.message.isNotEmpty ? res.message : 'Login successful',
+          snackPosition: SnackPosition.TOP,
+        );
+        Get.offAllNamed(HomeSearchScreen.routeName);
+        return;
+      }
+
+      Get.snackbar(
+        'Error',
+        res.message.isNotEmpty ? res.message : 'Login failed',
+        snackPosition: SnackPosition.TOP,
+      );
+    } on ApiException catch (e) {
+      Get.snackbar(
+        'Error',
+        e.message,
+        snackPosition: SnackPosition.TOP,
+      );
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.TOP,
+      );
     } finally {
       isLoading.value = false;
     }
@@ -53,6 +80,57 @@ class LoginController extends GetxController {
     emailC.dispose();
     passwordC.dispose();
     super.onClose();
+  }
+}
+
+class LoginResponse {
+  LoginResponse({
+    required this.status,
+    required this.message,
+    required this.data,
+  });
+
+  final int status;
+  final String message;
+  final LoginUser? data;
+
+  factory LoginResponse.fromJson(Map<String, dynamic> json) {
+    return LoginResponse(
+      status: (json['status'] as num?)?.toInt() ?? 0,
+      message: json['message']?.toString() ?? '',
+      data: json['data'] is Map<String, dynamic>
+          ? LoginUser.fromJson((json['data'] as Map).cast<String, dynamic>())
+          : null,
+    );
+  }
+}
+
+class LoginUser {
+  LoginUser({
+    required this.csId,
+    required this.name,
+    required this.email,
+    required this.mobile,
+    required this.city,
+    required this.country,
+  });
+
+  final String csId;
+  final String name;
+  final String email;
+  final String mobile;
+  final String city;
+  final String country;
+
+  factory LoginUser.fromJson(Map<String, dynamic> json) {
+    return LoginUser(
+      csId: json['cs_id']?.toString() ?? '',
+      name: json['name']?.toString() ?? '',
+      email: json['email']?.toString() ?? '',
+      mobile: json['mobile']?.toString() ?? '',
+      city: json['city']?.toString() ?? '',
+      country: json['country']?.toString() ?? '',
+    );
   }
 }
 

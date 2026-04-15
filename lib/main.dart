@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textile_markaz/app/theme/app_theme.dart';
 import 'package:textile_markaz/screens/auth/login/login.dart';
 import 'package:textile_markaz/screens/auth/signup/signup.dart';
 import 'package:textile_markaz/screens/category_grid_screen.dart';
@@ -24,7 +23,9 @@ class TextileMarkazApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Textile Markaz',
       debugShowCheckedModeBanner: false,
-      theme: buildAppTheme(),
+      theme:ThemeData(
+       
+      ),
       initialRoute: LoginScreen.routeName,
       routes: {
         HomeSearchScreen.routeName: (_) => const HomeSearchScreen(),
